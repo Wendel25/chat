@@ -2,6 +2,7 @@ import express, { Application } from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
+import AppInitial from './app';
 
 class App {
   private app: Application;
@@ -22,31 +23,28 @@ class App {
     });
 
     this.listenSocket();
-    this.setupRoutes();
   }
 
   listenServer() {
-    this.http.listen(3000, () => console.log('Servidor inicializado'));
+    this.http.listen(3000, () => console.log('Servidor mensagens -> porta 3000'));
   }
 
   listenSocket() {
     this.io.on('connection', (socket) => {
-      console.log(socket.id);
 
       socket.on('message', (msg) => {
-        console.log('Mensagem: ', msg);
-
         this.io.emit('message', msg);
       });
     });
   }
 
-  setupRoutes() {
-    this.app.get('/', (req, res) => {
-      res.sendFile(__dirname + '/index.html');
-    });
+  public getSocketServer(): Server {
+    return this.io;
   }
 }
 
-const app = new App();
-app.listenServer();
+const app1 = new App();
+app1.listenServer();
+
+const app2 = new AppInitial();
+app2.getApp().listen(4000, () => console.log('Servidor swagger -> porta 4000'));
