@@ -2,7 +2,6 @@ import express, { Application } from 'express';
 import http from 'http';
 import { Server } from 'socket.io';
 import cors from 'cors';
-import AppInitial from './app';
 
 class App {
   private app: Application;
@@ -13,6 +12,7 @@ class App {
     this.app = express();
     this.http = http.createServer(this.app);
 
+    // Middleware CORS para o servidor principal
     this.app.use(cors());
 
     this.io = new Server(this.http, {
@@ -31,7 +31,6 @@ class App {
 
   listenSocket() {
     this.io.on('connection', (socket) => {
-
       socket.on('message', (msg) => {
         this.io.emit('message', msg);
       });
@@ -45,6 +44,3 @@ class App {
 
 const app1 = new App();
 app1.listenServer();
-
-const app2 = new AppInitial();
-app2.getApp().listen(4000, () => console.log('Servidor swagger -> porta 4000'));
