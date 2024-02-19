@@ -9,7 +9,7 @@ Para executar a aplicação localmente, siga os passos abaixo:
 1. Clone este repositório:
 
 ```bash
-  git clone https://github.com/Wendel25/smart-fit.git
+  git clone https://github.com/Wendel25/chat.git
 
 ```
 
